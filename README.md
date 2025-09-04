@@ -18,7 +18,7 @@ hardware-collection/
   - Easily modifiable for different electrode configurations
 
 - **Data Acquisition System** (`combined.py`):
-  - Interfaces with capacitance measurement hardware (e.g., AD7746)
+  - Interfaces with capacitance measurement hardware and stepper
   - Collects raw capacitance data from all electrode pairs
   - Performs real-time noise filtering and signal conditioning
   - Outputs structured CSV files for reconstruction pipelines
