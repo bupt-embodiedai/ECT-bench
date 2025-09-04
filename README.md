@@ -5,10 +5,11 @@ This project provides a comprehensive solution for Electrical Capacitance Tomogr
 ## 🔧 Hardware and Data Collection
 
 The `hardware-collection/` directory contains essential files for sensor design and data acquisition:
+```
 hardware-collection/
 ├── sensor_9e.PcbDoc # 9-electrode ECT sensor design file (Altium Designer)
 └── combined.py # Data acquisition script for capacitance measurements
-
+```
 ### Key Features:
 - **Custom ECT Sensor Design** (`sensor_9e.PcbDoc`):
   - 9-electrode circular array configuration
