@@ -39,50 +39,41 @@ This project contains **two complementary methods** for ECT image reconstruction
    - Accepts **LBP-generated images** as input  
    - Can use either on-the-fly LBP processing or precomputed LBP images
 
----
-
-## 📂 Project Structure
-project_root/
-│
-│── hardware-collection/ # Sensor design and data acquisition
-│ ├── sensor_9e.PcbDoc # ECT sensor PCB design (Altium)
-│ └── combined.py # Data collection and processing
-│
-│── lbp/ # LBP reconstruction module
-│ ├── lbp.py # Core LBP imaging functions
-│ ├── sensitivity.py # Sensitivity matrix calculation
-│ └── README.md # Detailed usage guide
-│
-│── cnn2d/ # Deep learning reconstruction
-│ ├── dataset_processing.py # Dataset preparation
-│ ├── dataset.py # PyTorch Dataset definition
-│ ├── dataloader.py # Stratified DataLoader
-│ ├── cnn_2d.py # Autoencoder architecture
-│ ├── train.py # Training script
-│ ├── evaluate.py # Evaluation metrics
-│ ├── utils/ # Helper functions
-│ ├── checkpoints/ # Trained model weights
-│ ├── imgs/ # Contact capacitance images
-│ ├── imgs2/ # Non-contact capacitance images
-│ ├── labels/ # Material distribution labels
-│ └── README.md # Complete usage guide
-│
-│── docs/ # Additional documentation
-│ ├── calibration_guide.md
-│ └── hardware_setup.md
-│
-└── README.md # Main documentation (this file)
-
----
 
 ## 🚀 Usage Overview
 
-### 1. Data Collection
+### 1. LBP Imaging
+
+- Input: raw ECT data + background + sensitivity matrix  
+- Output: normalized LBP images  
+- Example:
 ```bash
-python hardware-collection/combined.py \
-  --output data/raw_measurements.csv \
-  --samples 18432 \
-  --rate 12
-•--output: Path to save measurements
-•--samples: Number of measurements to collect
-•--rate: Sampling rate in Hz
+python lbp/lbp.py
+```
+
+### 2. CNN2D Autoencoder
+
+- Input: **LBP-generated images**  
+- Output: reconstructed/enhanced ECT images  
+- Can use either:
+  1. **LBP run-on-the-fly**  
+  2. **Precomputed LBP images** from the dataset (no need to regenerate LBP each time)
+
+- Example:
+```bash
+python cnn2d/dataset_processing.py
+python cnn2d/train.py
+python cnn2d/evaluate.py
+```
+
+---
+
+## 📊 Notes
+
+- The CNN pipeline is **modular**: you can plug in other networks (U-Net, ResNet AE) with the same LBP inputs.  
+- `imgs/` vs. `imgs2/` can be toggled for **contact/non-contact experiments**.  
+- Precomputed LBP images **accelerate training and evaluation** while preserving reconstruction quality.
+
+---
+
+If you have questions or suggestions, feel free to open an issue or contact the author.
